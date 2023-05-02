@@ -7,8 +7,8 @@ import App from './App';
 
 import { MD3LightTheme as DefaultTheme,Provider as PaperProvider } from 'react-native-paper';
 import {name as appName} from './app.json';
-
-
+import { Provider } from 'react-redux';
+import store from './src/reducers/index'
 
 
 export default function Main() {
@@ -21,9 +21,11 @@ export default function Main() {
   },
 }
   return (
+  <Provider store={store}>
     <PaperProvider theme={theme}>
-      <App />
+        <App />
     </PaperProvider>
+  </Provider>
   );
 }
 

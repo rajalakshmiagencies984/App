@@ -1,22 +1,58 @@
 import { View, Text,StyleSheet } from 'react-native'
 import { Image } from 'react-native'
-import React,{useEffect} from 'react'
+import React,{useState,useEffect} from 'react'
 import colors from '../../../colors'
 import logo from '../../assests/logo'
-
+import { ProgressBar } from 'react-native-paper'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useDispatch } from 'react-redux'
+import { API_getUser } from '../../api'
+import { getCart } from '../../reducers/features/cart/cartSlice'
+import { getUser } from '../../reducers/features/user/userSlice'
 
 const Loading = ({navigation}) => {
+  const [progress,setProgress]=useState(0)
+  const dispatch = useDispatch();
+
   useEffect(()=>{
+      const getToken = async()=>{
+        setProgress(0.4)
+        const token = await AsyncStorage.getItem("Agencies")
+        setProgress(0.7)
+        if(token==null){
+          setProgress(1)
+          navigation.replace("Login")
+          return;
+        }else{
+          setProgress(1);
+          const carts = await AsyncStorage.getItem("Cart");
+          if(carts!=null){
+            const parsedCart=JSON.parse(carts)
+            
+           dispatch(getCart(parsedCart))
+          }
+          const parsedToken = JSON.parse(token)
+          const {_id}=parsedToken.user
+          const {data}=await API_getUser({id:_id})
+          dispatch(getUser(Object({...data})))
+          navigation.replace("MyTab")
+          return
+        }
+              
+        
+      }
       setTimeout(()=>{
-        navigation.replace("Login")
-      },2000)
+        getToken() 
+      },500)
   },[])
+
   return (
     <View style={styles.container}>
       <View style={styles.imgContainer}>
          <Image source={{uri:logo}} alt="Logo" style={styles.image}  />
       </View>
       <Text style={styles.brand}>Rajalakshmi Agencies</Text>
+        <ProgressBar progress={progress} color={colors.green} style={styles.progress} />
     </View>
   )
 }
@@ -38,9 +74,17 @@ const styles =StyleSheet.create({
       objectFit:"contain"
     },
     brand:{
-      color:colors.white,
+      color:colors.peacock,
       fontSize:32,
+      fontWeight:800,
       fontStyle:"italic"
+    },
+     progress:{    
+      height:6,
+      marginVertical:12,
+      width:300,
+      backgroundColor:colors.yellow,
+      opacity:0.5
     }
 
 })
