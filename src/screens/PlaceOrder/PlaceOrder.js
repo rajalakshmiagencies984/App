@@ -2,6 +2,7 @@ import { View, Text,StyleSheet, ScrollView } from 'react-native'
 import React,{useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { Button,Text as TextRN,RadioButton,Switch } from 'react-native-paper'
+import { API_newOrder } from '../../api'
 import colors from '../../../colors'
 import {v4 as uuidv4} from 'uuid'
 import { setLoading } from '../../reducers/features/loading/loadingSlice'
@@ -47,12 +48,14 @@ const PlaceOrder = ({navigation}) => {
   },[user])
   
   const handleSubmitOrder=async()=>{
+    dispatch(setLoading(true))
     if(cash==false && online==false){
       const id = uuidv4()
       dispatch(setAlert(Object({id,msg:"Please Select mode of Payment"})))
       setTimeout(()=>{
           dispatch(deleteAlert(id))
       },2000)
+      dispatch(setLoading(false))
       return
     }
     const obj ={
@@ -65,10 +68,21 @@ const PlaceOrder = ({navigation}) => {
       paid:cash?false:true
     }
     try {
-         console.log(obj)
+         const {data}=await API_newOrder(obj)
+         let id=uuidv4()
+         dispatch(setAlert(Object({id,msg:"Order Places Successfully"})))
+         setTimeout(()=>{
+            dispatch(deleteAlert(id))
+         },3000)
     } catch (error) {
-
+      let id=uuidv4()
+      dispatch(setAlert(Object({id,msg:"Error Try after Some Time"})))
+      setTimeout(()=>{
+         dispatch(deleteAlert(id))
+      },3000)
+      
     }
+    dispatch(setLoading(false))
   }
 
   return (

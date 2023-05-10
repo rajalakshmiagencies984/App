@@ -17,6 +17,8 @@ export const API_getCategory = ()=>API.get('/category')
 
 export const API_getproduct = ()=>API.get('/product')
 
+export const API_newOrder =(dara)=>API.get('/order')
+
 //http://10.0.2.2:5000/api/"
 // http://192.168.1.7:5000/api/
 
