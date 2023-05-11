@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet, ScrollView } from 'react-native'
+import { View, Text,StyleSheet, ScrollView, Alert } from 'react-native'
 import React,{useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import { Button,Text as TextRN,RadioButton,Switch } from 'react-native-paper'
@@ -7,9 +7,13 @@ import colors from '../../../colors'
 import {v4 as uuidv4} from 'uuid'
 import { setLoading } from '../../reducers/features/loading/loadingSlice'
 import { setAlert,deleteAlert } from '../../reducers/features/alert/alertSlice'
-
+import {useStripe} from '@stripe/stripe-react-native'
+import { API_paymentIntent } from '../../api'
+import { addOrder } from '../../reducers/features/orders/orderSlice'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const PlaceOrder = ({navigation}) => {
+
   const carts = useSelector((state)=>(state.cart))
   const products=useSelector((state)=>(state.product))
   const user=useSelector((state)=>(state.user))
@@ -46,7 +50,10 @@ const PlaceOrder = ({navigation}) => {
           setChecked(user.address[0]._id)
       }
   },[user])
-  
+
+
+  const {initPaymentSheet,presentPaymentSheet}=useStripe()
+
   const handleSubmitOrder=async()=>{
     dispatch(setLoading(true))
     if(cash==false && online==false){
@@ -67,22 +74,55 @@ const PlaceOrder = ({navigation}) => {
       modeOfPayment:cash?"cash":"online",
       paid:cash?false:true
     }
+
     try {
          const {data}=await API_newOrder(obj)
+         AsyncStorage.removeItem("Cart")
+         dispatch(addOrder(Object(data)))
          let id=uuidv4()
          dispatch(setAlert(Object({id,msg:"Order Places Successfully"})))
          setTimeout(()=>{
             dispatch(deleteAlert(id))
          },3000)
+         navigation.replace("MyTab",{screen:"History"})
     } catch (error) {
+      console.log(error)
       let id=uuidv4()
       dispatch(setAlert(Object({id,msg:"Error Try after Some Time"})))
       setTimeout(()=>{
          dispatch(deleteAlert(id))
       },3000)
-      
+      navigation.replace("myTab",{screen:"Home"})
     }
     dispatch(setLoading(false))
+
+  }
+
+  const onCheckout = async()=>{
+    try {
+      const {data} = await API_paymentIntent({amount:Math.floor(total *100)})
+      var dataIntent=data.paymentIntent
+    } catch (error) {
+      Alert.alert("Something went wrong")
+      return
+    }
+
+      const initResponse = await initPaymentSheet({
+        merchantDisplayName:user.name,
+        paymentIntentClientSecret:dataIntent
+      })
+
+      if(initResponse.error){
+        Alert.alert("Something went Wrong")
+        return
+      }
+
+      const paymentResponse =  await presentPaymentSheet();
+      if(paymentResponse.error){
+        Alert.alert("Something Went Wrong")
+      }
+
+      handleSubmitOrder();
   }
 
   return (
@@ -114,7 +154,7 @@ const PlaceOrder = ({navigation}) => {
           <Text>Total - ₹{total}</Text>
         </View>
       </View>
-      
+
       <Text style={{color:"red",fontSize:14,margin:12}}>**Delivery Charges will be collected during Delivery of products**</Text>
 
       {/*  */}
@@ -128,8 +168,11 @@ const PlaceOrder = ({navigation}) => {
                   <Switch value={cash} onValueChange={onToggleCash} />
               </View>
             </View>
-      
-       <View style={styles.toggleContainer}>
+
+
+        {total >100 &&
+
+      <View style={styles.toggleContainer}>
           <View>
             <Text>Online Payment</Text>
           </View>
@@ -137,7 +180,9 @@ const PlaceOrder = ({navigation}) => {
               <Switch value={online} onValueChange={onToggleOnline} />
           </View>
         </View>
+    }
       </View>
+
 
       {/*  */}
       <View style={styles.addressContainer}>
@@ -149,7 +194,7 @@ const PlaceOrder = ({navigation}) => {
                   <Text>{a.street}</Text>
                   <Text>{a.city}</Text>
                   <Text>{a.pinCode}</Text>
-                  <RadioButton 
+                  <RadioButton
                     color={colors.peacock}
                     value={a._id}
                     status={ checked === a._id ? 'checked' : 'unchecked' }
@@ -163,10 +208,10 @@ const PlaceOrder = ({navigation}) => {
       {/*  */}
 
       <View>
-        <Button onPress={handleSubmitOrder} mode="contained">Confirm Order</Button>
+        <Button onPress={online?onCheckout:handleSubmitOrder} mode="contained">Confirm Order</Button>
       </View>
 
-   
+
       </ScrollView>
 
     </View>

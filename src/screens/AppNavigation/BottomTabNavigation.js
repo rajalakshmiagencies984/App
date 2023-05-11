@@ -13,19 +13,19 @@ import Orders from '../Orders/Orders';
 import Products from '../Products/Products';
 import SingleProduct from '../SingleProduct/SingleProduct';
 import Search from '../Search/Search';
-
+import SingleOrder from '../SingleOrder/SingleOrder';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
         initialRouteName='Home'
        screenOptions={
         {
             headerShown: false,
-            
+
             tabBarStyle:{
-                
+
                 position:"relative",
                 bottom:0,
                 left:0,
@@ -36,11 +36,11 @@ function MyTabs() {
                 height:60,
                 ...styles.shadow
             }
-        
+
         }}
-    
+
     >
-      <Tab.Screen name="Home" component={Home} 
+      <Tab.Screen name="Home" component={Home}
         options={{
             tabBarIcon:({focused})=>(
                 <View style={{alignItems:"center",justifyContent:"center"}}>
@@ -53,17 +53,17 @@ function MyTabs() {
                             tintColor:focused ? colors.black : colors.gray
                         }}
                     />
-                    
+
                 </View>
             ),
             tabBarLabel:({focused})=>(
                 <Text style={{color:focused?colors.black : colors.gray,fontSize:12,marginBottom:6}}>Home</Text>
             ),
-           
+
         }}
       />
       <Tab.Screen name="History" component={Orders}
-      
+
        options={{
             tabBarIcon:({focused})=>(
                 <View style={{alignItems:"center",justifyContent:"center"}}>
@@ -76,7 +76,7 @@ function MyTabs() {
                             tintColor:focused ? colors.black : colors.gray
                         }}
                     />
-                    
+
                 </View>
             ),
             tabBarLabel:({focused})=>(
@@ -85,26 +85,32 @@ function MyTabs() {
         }}
       />
       <Tab.Screen  name="Products" component={Products}
-      
+
         options={{
             tabBarButton: () => null,
         }}
       />
+       <Tab.Screen  name="SingleOrder" component={SingleOrder}
+
+            options={{
+                tabBarButton: () => null,
+            }}
+            />
       <Tab.Screen  name="Search" component={Search}
-      
+
         options={{
             tabBarButton: () => null,
         }}
       />
 
       <Tab.Screen  name="SingleProduct" component={SingleProduct}
-      
+
         options={{
             tabBarButton: () => null,
         }}
       />
-      <Tab.Screen name="Cart" component={Cart} 
-      
+      <Tab.Screen name="Cart" component={Cart}
+
        options={{
             tabBarIcon:({focused})=>(
                 <View style={{alignItems:"center",justifyContent:"center"}}>
@@ -117,7 +123,7 @@ function MyTabs() {
                             tintColor:focused ? colors.black : colors.gray
                         }}
                     />
-                    
+
                 </View>
             ),
             tabBarLabel:({focused})=>(
@@ -126,8 +132,8 @@ function MyTabs() {
         }}
       />
 
-      <Tab.Screen name="Account" component={Account} 
-      
+      <Tab.Screen name="Account" component={Account}
+
        options={{
             tabBarIcon:({focused})=>(
                 <View style={{alignItems:"center",justifyContent:"center"}}>
@@ -140,7 +146,7 @@ function MyTabs() {
                             tintColor:focused ? colors.black : colors.gray
                         }}
                     />
-                    
+
                 </View>
             ),
             tabBarLabel:({focused})=>(

@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice } from "@reduxjs/toolkit";
 import AddAddress from "../../../components/AddAddress/AddAddress";
 
+
 export const cartSlice = createSlice({
     name:"cart",
     initialState:[
@@ -29,7 +30,7 @@ export const cartSlice = createSlice({
             state[idx].quantityOfProducts=quantityOfProducts+1;
             state[idx].totalAmount=price*(quantityOfProducts+1)
             return state;
-            
+
         },
         deleteItem:(state,action)=>{
             const id=action.payload
@@ -38,7 +39,7 @@ export const cartSlice = createSlice({
             let quantityOfProducts=state[idx].quantityOfProducts;
             state[idx].quantityOfProducts=quantityOfProducts-1;
             state[idx].totalAmount=price*(quantityOfProducts-1)
-           
+
             return state;
         }
     }

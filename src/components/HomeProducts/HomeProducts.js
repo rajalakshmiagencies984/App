@@ -2,6 +2,7 @@ import { View, Text,StyleSheet,Image } from 'react-native'
 import React from 'react'
 import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+
 const HomeProducts = ({products,category}) => {
     const navigation = useNavigation();
   return (
@@ -15,7 +16,7 @@ const HomeProducts = ({products,category}) => {
                         </View>
                         <View style={{justifyContent:"center",
                     alignItems:"center"}}>
-                            <Text style={{color:category.background,fontSize:18,fontWeight:600}}>{p.name}</Text>
+                            <Text style={{color:category.background,fontSize:14,fontWeight:600}}>{p.name}</Text>
                             <Button onPress={()=>navigation.push('MyTab',{screen:"SingleProduct",params:{id:p._id}})} mode="oulined" textColor={category.background}>View</Button>
                         </View>
                     </View>
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     },
     imgContainer:{
         height:100,
-        width:100
+        width:80
     },
     img:{
         height:"100%",
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent:"flex-end",
         margin:12
     },
-   
+
 
 })
 

@@ -9,22 +9,24 @@ import { MD3LightTheme as DefaultTheme,Provider as PaperProvider } from 'react-n
 import {name as appName} from './app.json';
 import { Provider } from 'react-redux';
 import store from './src/reducers/index'
-
-
+import { StripeProvider} from '@stripe/stripe-react-native';
+import { PUBLISHABLE_KEY } from './src/constants';
 export default function Main() {
     const theme= {
     ...DefaultTheme,
     colors: {
        ...DefaultTheme.colors,
         primary: '#212529',
-        
+
   },
 }
   return (
   <Provider store={store}>
-    <PaperProvider theme={theme}>
-        <App />
-    </PaperProvider>
+    <StripeProvider publishableKey={PUBLISHABLE_KEY}>
+      <PaperProvider theme={theme}>
+          <App />
+      </PaperProvider>
+    </StripeProvider>
   </Provider>
   );
 }

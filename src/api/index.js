@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL:"http://10.0.2.2:5000/api/"})
+const API = axios.create({ baseURL:"http://192.168.128.140:5000/api/"})
 
 
 export const API_login = (data)=> API.post('/user/login',data)
@@ -17,9 +17,11 @@ export const API_getCategory = ()=>API.get('/category')
 
 export const API_getproduct = ()=>API.get('/product')
 
-export const API_newOrder =(dara)=>API.get('/order')
+export const API_paymentIntent =(data)=>API.post('/payment/intent',data)
+
+export const API_newOrder =(data)=>API.post('/order',data)
+
+export const API_MyOrder = (data)=>API.get(`/order/${data.id}`)
 
 //http://10.0.2.2:5000/api/"
-// http://192.168.1.7:5000/api/
-
-
+//http://192.168.1.7:5000/api/

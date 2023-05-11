@@ -1,18 +1,28 @@
-import { View, Text,StyleSheet } from 'react-native'
-import { Image } from 'react-native'
+import { View, Text,StyleSheet,Image } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import colors from '../../../colors'
 import logo from '../../assests/logo'
 import { ProgressBar } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch } from 'react-redux'
-import { API_getUser } from '../../api'
+import { API_getUser,API_MyOrder } from '../../api'
+
 import { getCart } from '../../reducers/features/cart/cartSlice'
 import { getUser } from '../../reducers/features/user/userSlice'
+import { setOrder } from '../../reducers/features/orders/orderSlice'
 
 const Loading = ({navigation}) => {
   const [progress,setProgress]=useState(0)
   const dispatch = useDispatch();
+
+  const getOrder = async(id)=>{
+    try{
+    const {data}=await API_MyOrder({id})
+    dispatch(setOrder(data))
+    }catch(error){
+
+    }
+  }
 
   useEffect(()=>{
       const getToken = async()=>{
@@ -28,21 +38,22 @@ const Loading = ({navigation}) => {
           const carts = await AsyncStorage.getItem("Cart");
           if(carts!=null){
             const parsedCart=JSON.parse(carts)
-            
+
            dispatch(getCart(parsedCart))
           }
           const parsedToken = JSON.parse(token)
           const {_id}=parsedToken.user
           const {data}=await API_getUser({id:_id})
           dispatch(getUser(Object({...data})))
+          getOrder(_id)
           navigation.replace("MyTab")
           return
         }
-              
-        
+
+
       }
       setTimeout(()=>{
-        getToken() 
+        getToken()
       },500)
   },[])
 
@@ -79,7 +90,7 @@ const styles =StyleSheet.create({
       fontWeight:800,
       fontStyle:"italic"
     },
-     progress:{    
+     progress:{
       height:6,
       marginVertical:12,
       width:300,
