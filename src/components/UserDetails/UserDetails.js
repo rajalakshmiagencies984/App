@@ -25,7 +25,7 @@ const UserDetails = ({user}) => {
     },3000)
     navigation.replace("Loading")
     dispatch(setLoading(false))
-    
+
  }
   return (
     <View style={styles.container}>
@@ -82,7 +82,7 @@ const UserDetails = ({user}) => {
                 {date}
             </Text>
         </View>
-        
+
         <View style={[styles.div,{marginVertical:12}]}>
             <Button mode="contained" onPress={handleLogout} >
                 Logout
@@ -90,9 +90,9 @@ const UserDetails = ({user}) => {
         </View>
 
 
-        
 
-        
+
+
     </View>
   )
 }
@@ -115,10 +115,12 @@ const styles = StyleSheet.create({
     },
     label:{
         fontSize:18,
-        fontWeight:500
+        fontWeight:500,
+        color:colors.black,
     },
     value:{
-        fontSize:15
+        fontSize:15,
+        color:colors.black
     }
 })
 

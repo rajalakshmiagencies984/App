@@ -14,8 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Login = ({navigation}) => {
 
-  const [email,setEmail]=useState("karthirajendran12003@gmail.com");
-  const [password,setPassword]=useState("karthi12003")
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("")
   const [deviceId,setDeviceID]=useState("");
   const dispatch = useDispatch();
   const handleLogin = ()=>{
@@ -23,7 +23,7 @@ const Login = ({navigation}) => {
   }
   useLayoutEffect(()=>{
         const getDeviceId =async()=>{
-           let device= await OneSignal.getDeviceState()   
+           let device= await OneSignal.getDeviceState()
             setDeviceID(device.userId)
       }
       getDeviceId()
@@ -72,17 +72,17 @@ const Login = ({navigation}) => {
         <View style={styles.form}>
           <FormHeader/>
           <Text style={styles.loginHead}>Login</Text>
-          <TextInput 
+          <TextInput
                   mode="flat"
                   label="Email"
-                  placeholder="Enter your Email" 
+                  placeholder="Enter your Email"
                   value={email}
                   onChangeText={setEmail}
                   style={styles.input} />
-          <TextInput 
+          <TextInput
                   mode="flat"
                   label="Password"
-                  placeholder="Enter your Password" 
+                  placeholder="Enter your Password"
                   value={password}
                   secureTextEntry
                   onChangeText={setPassword}
@@ -92,12 +92,12 @@ const Login = ({navigation}) => {
                     Login
             </Button>
             <View style={styles.bottom}>
-                   
+
                        <TextRP variant="bodyLarge">Don't have an acccount</TextRP>
-                        <TouchableOpacity onPress={handleLogin}>   
+                        <TouchableOpacity onPress={handleLogin}>
                         <TextRP variant='bodyLarge' style={styles.login}>Register</TextRP>
-                      </TouchableOpacity> 
-                </View> 
+                      </TouchableOpacity>
+                </View>
         </View>
     </View>
   )

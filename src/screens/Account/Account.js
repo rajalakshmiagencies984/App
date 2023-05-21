@@ -1,16 +1,20 @@
-import {ScrollView, View,Text,StyleSheet } from 'react-native'
+import {ScrollView, View,Text,StyleSheet,Linking } from 'react-native'
 import React from 'react'
 import Header from '../../components/Header/Header'
 import colors from '../../../colors'
-import { Avatar } from 'react-native-paper'
+import { Avatar, Button } from 'react-native-paper'
 
 import { useSelector } from 'react-redux'
 import UserDetails from '../../components/UserDetails/UserDetails'
 import Address from '../../components/Address/Address'
 const Account = () => {
   const user = useSelector((state)=>(state.user))
-  const orders = useSelector((state)=>(state.order))
-  const carts = useSelector((state)=>(state.cart))
+
+  const goToUrl =()=>{
+    Linking.openURL("https://rajalakshmi-agencies.vercel.app/")
+
+  }
+
 
   return (
     <ScrollView style={{flex:1}}>
@@ -23,6 +27,11 @@ const Account = () => {
         <UserDetails user={user} />
         <Address user={user} />
       </View>
+
+      <View style={{width:"100%",alignItems:"center",justifyContent:"center",flexDirection:"row",marginVertical:24}}>
+        <Button mode="contained" onPress={()=>goToUrl()}> About us</Button>
+      </View>
+
     </View>
     </ScrollView>
   )
@@ -46,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize:18,
     textTransform:'capitalize'
   },
-  
+
 })
 
 export default Account

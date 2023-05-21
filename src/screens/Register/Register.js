@@ -11,13 +11,13 @@ import { setAlert,deleteAlert } from '../../reducers/features/alert/alertSlice'
 import {v4 as uuidv4} from 'uuid'
 const Register = ({navigation}) => {
 
-  const [email,setEmail]=useState("karthirajendran12003@gmail.com");
-  const [password,setPassword]=useState("karthi12003")
-  const [phone,setPhone]=useState("8667259481")
-  const [name,setName]=useState("karthikeyan")
-  const [aadhar,setAadhar]=useState("123456789012")
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("")
+  const [phone,setPhone]=useState("")
+  const [name,setName]=useState("")
+  const [aadhar,setAadhar]=useState("")
   const [deviceId,setDeviceID]=useState("")
- 
+
   const dispatch = useDispatch();
 
   const handleLogin = ()=>{
@@ -25,7 +25,7 @@ const Register = ({navigation}) => {
   }
   useLayoutEffect(()=>{
         const getDeviceId =async()=>{
-           let device= await OneSignal.getDeviceState()   
+           let device= await OneSignal.getDeviceState()
             setDeviceID(device.userId)
       }
       getDeviceId()
@@ -37,11 +37,11 @@ const Register = ({navigation}) => {
       for (let i = 0; i < 4; i++ ) {
           OTP += digits[Math.floor(Math.random() * 10)];
       }
-      return OTP; 
+      return OTP;
     }
 
     const handleSubmit =async()=>{
-    
+
       dispatch(setLoading(Boolean(true)))
       try {
         const id = uuidv4();
@@ -63,52 +63,52 @@ const Register = ({navigation}) => {
       }
       dispatch(setLoading(Boolean(false)))
     }
-   
-    
+
+
 
   return (
-    
+
     <ScrollView  style={styles.container}>
       <View style={{marginTop:"20%"}}>
         <View style={styles.form}>
           <FormHeader/>
           <Text style={styles.loginHead}>Register</Text>
-          <TextInput 
+          <TextInput
                   mode="flat"
                   label="Name"
-                  placeholder="Enter your Name" 
+                  placeholder="Enter your Name"
                   value={name}
                   onChangeText={setName}
                   style={styles.input} />
-          <TextInput 
+          <TextInput
                   mode="flat"
                   label="Email"
-                  placeholder="Enter your Email" 
+                  placeholder="Enter your Email"
                   value={email}
                   onChangeText={setEmail}
                   style={styles.input} />
-          <TextInput 
+          <TextInput
                   mode="flat"
                   label="Phone"
-                  placeholder="Enter your Phone number" 
+                  placeholder="Enter your Phone number"
                   value={phone}
                   onChangeText={setPhone}
                   keyboardType='numeric'
                   style={styles.input} />
-          <TextInput 
+          <TextInput
                   mode="flat"
                   label="Aadhar No."
-                  placeholder="Enter your Aadhar number" 
+                  placeholder="Enter your Aadhar number"
                   value={aadhar}
                   onChangeText={setAadhar}
                   keyboardType='numeric'
                   style={styles.input} />
-          
-          <TextInput 
+
+          <TextInput
                   mode="flat"
                   label="Password"
                   secureTextEntry
-                  placeholder="Enter your Password" 
+                  placeholder="Enter your Password"
                   value={password}
                   onChangeText={setPassword}
                   style={styles.input} />
@@ -118,10 +118,10 @@ const Register = ({navigation}) => {
             </Button>
             <View style={styles.bottom}>
                        <TextRP variant="bodyLarge">Already have an acccount</TextRP>
-                        <TouchableOpacity onPress={handleLogin}>   
+                        <TouchableOpacity onPress={handleLogin}>
                         <TextRP variant='bodyLarge' style={styles.login}>Login</TextRP>
-                      </TouchableOpacity> 
-                </View> 
+                      </TouchableOpacity>
+                </View>
         </View>
   </View>
     </ScrollView>
@@ -137,10 +137,10 @@ const styles = StyleSheet.create({
     // justifyContent:"center",
     // alignItems:"center"
     padding:24,
-   
+
   },
   form:{
-  
+
     borderColor:colors.peacock,
     borderRadius:24,
     borderStyle:"solid",

@@ -20,7 +20,7 @@ const Loading = ({navigation}) => {
     const {data}=await API_MyOrder({id})
     dispatch(setOrder(data))
     }catch(error){
-
+      console.log(error.message)
     }
   }
 

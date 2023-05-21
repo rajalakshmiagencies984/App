@@ -50,14 +50,14 @@ function MyTabs() {
                         style={{
                             width:25,
                             height:24,
-                            tintColor:focused ? colors.black : colors.gray
+                            tintColor:colors.black
                         }}
                     />
 
                 </View>
             ),
             tabBarLabel:({focused})=>(
-                <Text style={{color:focused?colors.black : colors.gray,fontSize:12,marginBottom:6}}>Home</Text>
+                <Text style={{color:colors.black,fontSize:12,marginBottom:6}}>Home</Text>
             ),
 
         }}
@@ -73,14 +73,14 @@ function MyTabs() {
                         style={{
                             width:25,
                             height:24,
-                            tintColor:focused ? colors.black : colors.gray
+                            tintColor:colors.black
                         }}
                     />
 
                 </View>
             ),
             tabBarLabel:({focused})=>(
-                <Text style={{color:focused?colors.black : colors.gray,fontSize:12,marginBottom:6}}>Orders</Text>
+                <Text style={{color:colors.black ,fontSize:12,marginBottom:6}}>Orders</Text>
             )
         }}
       />
@@ -120,14 +120,14 @@ function MyTabs() {
                         style={{
                             width:25,
                             height:24,
-                            tintColor:focused ? colors.black : colors.gray
+                            tintColor:colors.black
                         }}
                     />
 
                 </View>
             ),
             tabBarLabel:({focused})=>(
-                <Text style={{color:focused?colors.black : colors.gray,fontSize:12,marginBottom:6}}>Cart</Text>
+                <Text style={{color:colors.black ,fontSize:12,marginBottom:6}}>Cart</Text>
             )
         }}
       />
@@ -143,14 +143,14 @@ function MyTabs() {
                         style={{
                             width:25,
                             height:24,
-                            tintColor:focused ? colors.black : colors.gray
+                            tintColor:colors.black
                         }}
                     />
 
                 </View>
             ),
             tabBarLabel:({focused})=>(
-                <Text style={{color:focused?colors.black : colors.gray,fontSize:12,marginBottom:6}}>Account</Text>
+                <Text style={{color:colors.black,fontSize:12,marginBottom:6}}>Account</Text>
             )
         }}
       />

@@ -4,7 +4,7 @@ import colors from '../../../colors'
 import moment from 'moment'
 import { Button } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-const OrderCard = ({o_products,_id,totalAmount,status,orderedOn,paid,modeOfPayment}) => {
+const OrderCard = ({o_products,_id,totalAmount,status,orderedOn,deliveredOn,paid,modeOfPayment}) => {
 
   const navigation = useNavigation();
   const handleNavigate = ()=>{
@@ -13,19 +13,12 @@ const OrderCard = ({o_products,_id,totalAmount,status,orderedOn,paid,modeOfPayme
   return (
     <View style={styles.container} >
         <Text>Total No Of Products : {o_products.length}</Text>
-        <Text>Products</Text>
-        <View style={{marginBottom:6}}>
-            {o_products.map((o,idx)=>(
-                <View key={idx}>
-                            <Text>{o.name}</Text>
-                </View>
-            ))}
-        </View>
         <Text>Total Amount : {totalAmount}</Text>
         <Text>Status:{status}</Text>
         <Text>Paid : {paid?"Paid":"Not Paid"}</Text>
         <Text>Mode Of Payment : {modeOfPayment}</Text>
         <Text>Ordered On : {moment(orderedOn).fromNow()}</Text>
+        <Text>Delivered on :  {deliveredOn==null ? "Not Yet " :moment(deliveredOn).fromNow()}</Text>
         <Button onPress={handleNavigate} mode="contained" style={{marginVertical:12}}>View more Details</Button>
     </View>
   )
@@ -37,7 +30,8 @@ const styles = StyleSheet.create({
         padding:12,
         backgroundColor:colors.white,
         elevation:10,
-        shadowOffsetColor:colors.white
+        shadowOffsetColor:colors.white,
+        gap:6
     }
 })
 

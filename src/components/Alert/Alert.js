@@ -5,15 +5,15 @@ import colors from '../../../colors'
 
 const Alert = () => {
     const alerts = useSelector((state)=>(state.alert))
-  
+
   return (
     <View style={styles.container}>
         {alerts?.map(a=>(
             <View style={styles.alertItem} key={a.id}>
                 <Text style={styles.message}>{a.msg}</Text>
-            </View> 
+            </View>
         ))}
-        
+
     </View>
   )
 }
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         alignItems:"center",
         zIndex:1001,
         bottom:67,
-        width:"100%"
+        width:"100%",
+        gap:6,
     },
     alertItem:{
         backgroundColor:"#495057",

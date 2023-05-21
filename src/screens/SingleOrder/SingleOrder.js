@@ -39,7 +39,8 @@ const SingleOrder = ({navigation,route}) => {
             </View>
         ))}
       </View>
-    <Text>Total List</Text>
+      <View style={{margin:12,elevation:10,backgroundColor:colors.white,borderRadius:12,padding:12}}>
+    <Text style={{color:colors.black,fontSize:18,fontWeight:"bold"}}>Total List</Text>
     <View>
         {orders.filter(o=> o._id==id)[0].products.map(p=>{
             const product = products.filter(p1=> p1._id==p.product_id)[0]
@@ -48,6 +49,7 @@ const SingleOrder = ({navigation,route}) => {
                 <View style={{flexDirection:"row",
                 justifyContent:"space-between",
                 alignItems:"center",
+                margin:12
                 }} key={id} >
                     <View>
                         <Text>{product.name}</Text>
@@ -59,22 +61,28 @@ const SingleOrder = ({navigation,route}) => {
             )
         })}
     </View>
-
-    <View style={{backgroundColor:"white",flexDirection:"row",justifyContent:"flex-end"}}>
-        <View style={{marginHorizontal:12,marginBottom:10}}>
+    <View style={{backgroundColor:"white",flexDirection:"row",justifyContent:"flex-end",marginVertical:12}}>
+        <View style={{marginHorizontal:10,marginBottom:10}}>
           <Text>Total - ₹{order.totalAmount}</Text>
         </View>
       </View>
 
+    </View>
+
+        <View style={{margin:12,elevation:10,backgroundColor:colors.white,borderRadius:12,padding:12}}>
+
         <View >
-            <Text>Order Details</Text>
-            <Text>Address : {address.doorNo} , {address.street} , {address.city} -{address.pinCode} </Text>
-            <Text>Paid :  {order.paid ? "Paid":"Not Paid"}</Text>
-            <Text>Mode Of Payment : {order.modeOfPayment}</Text>
-            <Text>Status : {order.status}</Text>
-            <Text>Ordered On : {moment(order.orderedOn).fromNow()}</Text>
-            <Text>Delivery Status : {order.deliveryStatus?"Delivered":"Not Delivered"}</Text>
-            <Text>{order.acceptedOn?"Accepted By Admin":"Waiting For acceptance By Admin"}</Text>
+            <Text style={{color:colors.black,fontSize:18,fontWeight:"bold",margin:12}}>Order Details</Text>
+            <View style={{gap:6,margin:12}}>
+                <Text>Address : {address.doorNo} , {address.street} , {address.city} -{address.pinCode} </Text>
+                <Text>Paid :  {order.paid ? "Paid":"Not Paid"}</Text>
+                <Text>Mode Of Payment : {order.modeOfPayment}</Text>
+                <Text>Status : {order.status}</Text>
+                <Text>Ordered On : {moment(order.orderedOn).fromNow()}</Text>
+                <Text>Delivery Status : {order.deliveryStatus?"Delivered":"Not Delivered"}</Text>
+                <Text>{order.acceptedOn?"Accepted By Admin":"Waiting For acceptance By Admin"}</Text>
+          </View>
+        </View>
         </View>
       </ScrollView>
     </View>
