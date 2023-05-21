@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Text as TextRN } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { addItem,deleteItem,deleteCart } from '../../reducers/features/cart/cartSlice'
+import { addItem,deleteItem } from '../../reducers/features/cart/cartSlice'
 import colors from '../../../colors'
 const CartCard = ({c,product}) => {
     const dispatch=useDispatch()
@@ -24,9 +24,9 @@ const CartCard = ({c,product}) => {
                       <Text style={{color:colors.black,fontSize:18,fontWeight:700}} >{product.name} -{product.category}</Text>
                       <Text style={{color:colors.black,fontSize:18,fontWeight:600}}>{c.quantity}</Text>
                       <Text style={{color:colors.black,fontSize:18,fontWeight:500}}>₹{c.price}</Text>
-                    </View> 
+                    </View>
                 </View>
-               
+
                 <View style={styles.middle}>
                   <View style={styles.buttonQuantity}>
                     <Text style={styles.quantityText}>Quantity-{c.quantityOfProducts}</Text>
@@ -45,8 +45,8 @@ const CartCard = ({c,product}) => {
               </View>
 
               <View style={styles.bottom}>
-                  
-             
+
+
                   <View>
                     <Button onPress={()=>navigation.push("MyTab",{screen:"SingleProduct",params:{id:c.product_id}})} color={colors.peacock} title="View Product"/>
                   </View>
@@ -102,7 +102,7 @@ cartItem:{
   },
   quantityText:{
     fontSize:16,
-    marginBottom:6 
+    marginBottom:6
   },
   totolPrice:{
     width:"40%"

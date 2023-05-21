@@ -16,10 +16,7 @@ export const cartSlice = createSlice({
             return state=[...state,action.payload]
         },
         deleteCart:(state,action)=>{
-            let data=[...state.filter(s=> s.id !== action.payload)]
-            AsyncStorage.removeItem("Cart");
-            AsyncStorage.setItem("Cart",JSON.stringify(data))
-            return state=[...data]
+            return state=[]
 
         },
         addItem:(state,action)=>{

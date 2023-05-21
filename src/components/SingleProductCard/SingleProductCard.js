@@ -21,16 +21,17 @@ const SingleProductCard = ({product}) => {
       price:amt,
       totalAmount:1*amt
     }
-    
+
     const datas = await AsyncStorage.getItem("Cart");
+    console.log(datas)
     if(datas==null){
       await AsyncStorage.setItem("Cart",JSON.stringify([obj]))
     }else{
-      const parsedData = JSON.parse(datas) 
+      const parsedData = JSON.parse(datas)
       await AsyncStorage.removeItem("Cart")
       parsedData.push(obj)
       await AsyncStorage.setItem("Cart",JSON.stringify(parsedData))
-      
+
     }
     dispatch(addCart(Object(obj)))
     navigation.replace("MyTab",{screen:"Cart"})
@@ -71,7 +72,7 @@ const SingleProductCard = ({product}) => {
               </View>
             ))}
         </View>
-          
+
         <Text style={styles.headerTitle}>
           Products Can be Used For:
         </Text>
@@ -84,7 +85,7 @@ const SingleProductCard = ({product}) => {
         </View>
 
         <Text style={styles.headerTitle}>
-            Effects 
+            Effects
         </Text>
         <View style={styles.container}>
               {product.effects.map(e=>(
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     letterSpacing:2,
     marginVertical:6
   },
- 
+
   chemicalItem:{
     backgroundColor:colors.white,
     backgroundColor:colors.green,

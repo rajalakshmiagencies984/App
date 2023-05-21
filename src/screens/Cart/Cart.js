@@ -8,9 +8,9 @@ import colors from '../../../colors'
 import CartCard from '../../components/CartCard/CartCard'
 const Cart = ({navigation}) => {
   const carts = useSelector((state)=>(state.cart))
-  
+
   const products = useSelector((state)=>(state.product))
-  
+
   const [total,setTotal]=React.useState(0)
 
   React.useEffect(()=>{
@@ -23,7 +23,7 @@ const Cart = ({navigation}) => {
   },[carts])
 
   const handleSubmit=async()=>{
-    
+
      navigation.push('PlaceOrder')
   }
 
@@ -47,7 +47,7 @@ const Cart = ({navigation}) => {
       </ScrollView>
       {total!=0 &&
       <View style={styles.bottomButton}>
-          
+
           <ButtoRN onPress={handleSubmit} style={styles.btn}  mode="contained" >Place Order - Total Amount ₹{total} </ButtoRN>
       </View>
 }
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
     gap:12,
     marginHorizontal:12,
-  
+
   },
   bottomButton:{
    position:"relative",
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   btn:{
     backgroundColor:colors.peacock
   }
-  
+
 })
 
 export default Cart

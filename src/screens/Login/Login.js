@@ -47,6 +47,7 @@ const Login = ({navigation}) => {
       }
 
       dispatch(setLoading(true))
+      console.log(deviceId)
       try {
         const {data}= await API_login({email,password,deviceId});
         AsyncStorage.setItem("Agencies",JSON.stringify({...data}))

@@ -11,6 +11,7 @@ import {useStripe} from '@stripe/stripe-react-native'
 import { API_paymentIntent } from '../../api'
 import { addOrder } from '../../reducers/features/orders/orderSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { deleteCart } from '../../reducers/features/cart/cartSlice'
 
 const PlaceOrder = ({navigation}) => {
 
@@ -77,8 +78,9 @@ const PlaceOrder = ({navigation}) => {
 
     try {
          const {data}=await API_newOrder(obj)
-         AsyncStorage.removeItem("Cart")
+         await AsyncStorage.removeItem("Cart")
          dispatch(addOrder(Object(data)))
+         dispatch(deleteCart());
          let id=uuidv4()
          dispatch(setAlert(Object({id,msg:"Order Places Successfully"})))
          setTimeout(()=>{
@@ -120,6 +122,7 @@ const PlaceOrder = ({navigation}) => {
       const paymentResponse =  await presentPaymentSheet();
       if(paymentResponse.error){
         Alert.alert("Something Went Wrong")
+        return ;
       }
 
       handleSubmitOrder();

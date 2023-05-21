@@ -41,7 +41,14 @@ const Register = ({navigation}) => {
     }
 
     const handleSubmit =async()=>{
-
+      if(name.length==0 || email.length==0 || phone.length!=10 || aadhar.length!=12 || password.length<6){
+        const id = uuidv4();
+        dispatch(setAlert({msg:"Invalid Datas",id}))
+        setTimeout(()=>{
+          dispatch(deleteAlert(id))
+        },5000)
+        return
+      }
       dispatch(setLoading(Boolean(true)))
       try {
         const id = uuidv4();
